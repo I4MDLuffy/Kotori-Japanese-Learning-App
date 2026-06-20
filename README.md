@@ -164,10 +164,8 @@ Key design principles:
 ![Help](screenshots/KotoriIntro.png)
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
-git clone https://github.com/yourusername/kotori.git
-cd kotori
-open in Android Studio
-Run on emulator or device
+git clone https://github.com/I4MDLuffy/Kotori-Japanese-Learning-App.git
+cd Kotori-Japanese-Learning-App
