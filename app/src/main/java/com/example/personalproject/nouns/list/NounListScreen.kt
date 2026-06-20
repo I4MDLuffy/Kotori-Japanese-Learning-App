@@ -43,6 +43,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.compose.material.icons.outlined.HelpOutline
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import app.kotori.japanese.LocalAppContainer
 import app.kotori.japanese.data.model.NounEntry
 import kotlinx.coroutines.launch
@@ -50,6 +54,7 @@ import app.kotori.japanese.nouns.list.mvi.NounListAction
 import app.kotori.japanese.nouns.list.mvi.NounListViewModel
 import app.kotori.japanese.ui.components.JlptBadge
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -59,9 +64,37 @@ fun NounListScreen(onNounClick: (id: String, allIds: String) -> Unit, onBack: ()
         factory = viewModelFactory { initializer { NounListViewModel(container.nounRepository) } }
     )
     val state by vm.uiState.collectAsStateWithLifecycle()
+    var showHelp by remember { mutableStateOf(false) }
+
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "Nouns",
+            description = "Browse all nouns in the app.\n\n" +
+                "• Search by kanji, hiragana, romaji, or English meaning.\n" +
+                "• Filter by JLPT level or theme (animals, food, places, etc.).\n" +
+                "• Tap a noun to see its reading, meaning, counter word, and example usage.\n" +
+                "• Tap the bookmark icon to save a noun to your Saved list.\n" +
+                "• Tap the star icon to mark it as known for progress tracking.",
+            onDismiss = { showHelp = false },
+        )
+    }
 
     Scaffold(
-        topBar = { KotobaTopBar(title = "Nouns", onBack = onBack) },
+        topBar = {
+            KotobaTopBar(
+                title = "Nouns",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         Column(
             modifier = Modifier

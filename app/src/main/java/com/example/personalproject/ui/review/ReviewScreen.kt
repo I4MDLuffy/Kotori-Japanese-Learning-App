@@ -20,10 +20,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -31,6 +33,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +49,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import app.kotori.japanese.LocalAppContainer
 import app.kotori.japanese.LocalAppSettings
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 
 @Composable
 fun ReviewScreen(onBack: () -> Unit) {
@@ -53,9 +59,37 @@ fun ReviewScreen(onBack: () -> Unit) {
         factory = viewModelFactory { initializer { ReviewViewModel(container) } }
     )
     val state by vm.state.collectAsState()
+    var showHelp by remember { mutableStateOf(false) }
+
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "SRS Review",
+            description = "Spaced Repetition System (SRS) review session.\n\n" +
+                "Items you mark as known are scheduled for review at increasing intervals — 1 day, 3 days, 7 days, etc. — so you see them again just before you'd forget them.\n\n" +
+                "• Flip a card to reveal the answer.\n" +
+                "• Tap the check (✓) if you remembered correctly — the interval gets longer.\n" +
+                "• Tap the cross (✗) if you didn't — the item is rescheduled sooner.\n\n" +
+                "Regular short review sessions are more effective than long cramming sessions.",
+            onDismiss = { showHelp = false },
+        )
+    }
 
     Scaffold(
-        topBar = { KotobaTopBar(title = "SRS Review", onBack = onBack) },
+        topBar = {
+            KotobaTopBar(
+                title = "SRS Review",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         Box(
             modifier = Modifier.fillMaxSize().padding(padding),

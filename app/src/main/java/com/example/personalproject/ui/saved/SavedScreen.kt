@@ -85,7 +85,10 @@ fun SavedScreen(
             title = "Saved",
             description = "Items you bookmark anywhere in the app appear here.\n\n" +
                 "• ITEMS — All bookmarked entries grouped by type. Tap to open, tap the bookmark icon to remove.\n" +
-                "• SETS — Organise items into named study sets. Create a set, then add bookmarked items to it.",
+                "• SETS — Organise items into named study sets. Create a set, then add bookmarked items to it.\n\n" +
+                "JLPT sections:\n" +
+                "• JLPT Weak Points — items you answered incorrectly during practice tests are saved here automatically.\n" +
+                "• JLPT Review Later — items you bookmarked mid-test using the bookmark icon.",
             onDismiss = { showHelp = false },
         )
     }
@@ -181,15 +184,17 @@ private fun ItemsTab(
     }
 
     val byType = allItems.groupBy { it.type }
-    val typeOrder = listOf("vocab", "kanji", "grammar", "verb", "adjective", "noun", "phrase")
+    val typeOrder = listOf("vocab", "kanji", "grammar", "verb", "adjective", "noun", "phrase", "jlpt_weak", "jlpt_review")
     val typeLabels = mapOf(
-        "vocab"     to "Saved Vocabulary",
-        "kanji"     to "Saved Kanji",
-        "grammar"   to "Saved Grammar",
-        "verb"      to "Saved Verbs",
-        "adjective" to "Saved Adjectives",
-        "noun"      to "Saved Nouns",
-        "phrase"    to "Saved Phrases",
+        "vocab"       to "Saved Vocabulary",
+        "kanji"       to "Saved Kanji",
+        "grammar"     to "Saved Grammar",
+        "verb"        to "Saved Verbs",
+        "adjective"   to "Saved Adjectives",
+        "noun"        to "Saved Nouns",
+        "phrase"      to "Saved Phrases",
+        "jlpt_weak"   to "JLPT Weak Points",
+        "jlpt_review" to "JLPT Review Later",
     )
 
     LazyColumn(

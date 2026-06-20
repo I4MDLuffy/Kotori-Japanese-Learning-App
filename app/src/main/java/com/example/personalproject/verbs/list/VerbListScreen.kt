@@ -46,11 +46,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.compose.material.icons.outlined.HelpOutline
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import app.kotori.japanese.LocalAppContainer
 import app.kotori.japanese.data.model.VerbEntry
 import kotlinx.coroutines.launch
 import app.kotori.japanese.ui.components.JlptBadge
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 import app.kotori.japanese.verbs.list.mvi.VerbListAction
 import app.kotori.japanese.verbs.list.mvi.VerbListViewModel
 
@@ -62,9 +67,37 @@ fun VerbListScreen(onVerbClick: (id: String, allIds: String) -> Unit, onBack: ()
         factory = viewModelFactory { initializer { VerbListViewModel(container.verbRepository) } }
     )
     val state by vm.uiState.collectAsStateWithLifecycle()
+    var showHelp by remember { mutableStateOf(false) }
+
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "Verbs",
+            description = "Browse all verbs in the app.\n\n" +
+                "• Search by kanji, romaji, or English meaning.\n" +
+                "• Filter by JLPT level or verb group (godan/ichidan/suru/kuru).\n" +
+                "• Tap a verb to see its full conjugation table, example sentences, and related grammar patterns.\n" +
+                "• Tap the bookmark icon to save a verb to your Saved list.\n" +
+                "• Tap the star icon to mark it as known for progress tracking.",
+            onDismiss = { showHelp = false },
+        )
+    }
 
     Scaffold(
-        topBar = { KotobaTopBar(title = "Verbs", onBack = onBack) },
+        topBar = {
+            KotobaTopBar(
+                title = "Verbs",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         Column(
             modifier = Modifier

@@ -36,6 +36,7 @@ import kotlinx.serialization.Serializable
 // ── Explore / Misc ────────────────────────────────────────────────────────────
 
 @Serializable data object PurelyGrammarRoute
+@Serializable data object ReadingComprehensionRoute
 @Serializable data object QuickConversationalRoute
 @Serializable data object CountersRoute
 @Serializable data object TermStudyRoute
@@ -96,7 +97,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object JlptRoute
 @Serializable data class JlptLevelRoute(val level: String)   // "N5" | "N4" | "N3" | "N2" | "N1"
-@Serializable data class JlptPracticeTestRoute(val level: String)
+@Serializable data class JlptPracticeTestRoute(val level: String, val isMock: Boolean = false)
+@Serializable data object JlptDiagnosticTestRoute
 
 // ── Onomatopoeia ──────────────────────────────────────────────────────────────
 

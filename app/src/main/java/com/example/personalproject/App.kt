@@ -113,6 +113,10 @@ import app.kotori.japanese.navigation.RadicalListRoute
 import app.kotori.japanese.navigation.JlptRoute
 import app.kotori.japanese.navigation.JlptLevelRoute
 import app.kotori.japanese.navigation.JlptPracticeTestRoute
+import app.kotori.japanese.navigation.JlptDiagnosticTestRoute
+import app.kotori.japanese.jlpt.JlptDiagnosticTestScreen
+import app.kotori.japanese.navigation.ReadingComprehensionRoute
+import app.kotori.japanese.misc.ReadingComprehensionScreen
 import app.kotori.japanese.navigation.OnomatopoeiaRoute
 import app.kotori.japanese.navigation.VerbConjugationSetupRoute
 import app.kotori.japanese.navigation.VerbConjugationGameRoute
@@ -201,7 +205,7 @@ fun App(appContainer: AppContainer) {
                             onIntermediate = { navController.navigate(IntermediateRoute) },
                             onAdvanced = { navController.navigate(AdvancedRoute) },
                             onMaster = { navController.navigate(MasterRoute) },
-                            onPurelyGrammar = { navController.navigate(GrammarListRoute) },
+                            onReading = { navController.navigate(ReadingComprehensionRoute) },
                             onQuickConversational = { navController.navigate(QuickConversationalRoute) },
                             onCounters = { navController.navigate(CountersRoute) },
                             onTermStudy = { navController.navigate(TermStudyRoute) },
@@ -334,6 +338,12 @@ fun App(appContainer: AppContainer) {
                         PurelyGrammarScreen(
                             onBack = { navController.popBackStack() },
                             onGrammarList = { navController.navigate(GrammarListRoute) },
+                        )
+                    }
+
+                    composable<ReadingComprehensionRoute> {
+                        ReadingComprehensionScreen(
+                            onBack = { navController.popBackStack() },
                         )
                     }
 
@@ -681,7 +691,12 @@ fun App(appContainer: AppContainer) {
                     composable<JlptRoute> {
                         JlptScreen(
                             onLevelClick = { level -> navController.navigate(JlptLevelRoute(level)) },
+                            onDiagnosticTest = { navController.navigate(JlptDiagnosticTestRoute) },
                         )
+                    }
+
+                    composable<JlptDiagnosticTestRoute> {
+                        JlptDiagnosticTestScreen(onBack = { navController.popBackStack() })
                     }
 
                     composable<JlptLevelRoute> { backStackEntry ->
@@ -693,7 +708,8 @@ fun App(appContainer: AppContainer) {
                             onKanji = { navController.navigate(KanjiListRoute) },
                             onGrammar = { navController.navigate(GrammarListRoute) },
                             onPhrases = { navController.navigate(PhraseListRoute()) },
-                            onPracticeTest = { level -> navController.navigate(JlptPracticeTestRoute(level)) },
+                            onPracticeTest = { level -> navController.navigate(JlptPracticeTestRoute(level, isMock = false)) },
+                            onMockTest = { level -> navController.navigate(JlptPracticeTestRoute(level, isMock = true)) },
                         )
                     }
 
@@ -701,6 +717,7 @@ fun App(appContainer: AppContainer) {
                         val route = backStackEntry.toRoute<JlptPracticeTestRoute>()
                         JlptPracticeTestScreen(
                             level = route.level,
+                            isMock = route.isMock,
                             onBack = { navController.popBackStack() },
                         )
                     }

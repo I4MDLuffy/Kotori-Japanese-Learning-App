@@ -46,6 +46,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.compose.material.icons.outlined.HelpOutline
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import app.kotori.japanese.LocalAppContainer
 import kotlinx.coroutines.launch
 import app.kotori.japanese.adjectives.list.mvi.AdjectiveListAction
@@ -53,6 +57,7 @@ import app.kotori.japanese.adjectives.list.mvi.AdjectiveListViewModel
 import app.kotori.japanese.data.model.AdjectiveEntry
 import app.kotori.japanese.ui.components.JlptBadge
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -62,9 +67,37 @@ fun AdjectiveListScreen(onAdjectiveClick: (id: String, allIds: String) -> Unit, 
         factory = viewModelFactory { initializer { AdjectiveListViewModel(container.adjectiveRepository) } }
     )
     val state by vm.uiState.collectAsStateWithLifecycle()
+    var showHelp by remember { mutableStateOf(false) }
+
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "Adjectives",
+            description = "Browse all adjectives in the app.\n\n" +
+                "• Search by kanji, romaji, or English meaning.\n" +
+                "• Filter by JLPT level or type (i-adjective / na-adjective).\n" +
+                "• Tap an adjective to see its conjugation forms, example phrases, and theme.\n" +
+                "• Tap the bookmark icon to save an adjective to your Saved list.\n" +
+                "• Tap the star icon to mark it as known for progress tracking.",
+            onDismiss = { showHelp = false },
+        )
+    }
 
     Scaffold(
-        topBar = { KotobaTopBar(title = "Adjectives", onBack = onBack) },
+        topBar = {
+            KotobaTopBar(
+                title = "Adjectives",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         Column(
             modifier = Modifier

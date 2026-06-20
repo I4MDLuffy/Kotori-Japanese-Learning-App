@@ -11,17 +11,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,10 +37,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.kotori.japanese.LocalAppContainer
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 
 @Composable
 fun ProgressScreen(onBack: () -> Unit, onStartReview: () -> Unit = {}) {
     val container = LocalAppContainer.current
+    var showHelp by remember { mutableStateOf(false) }
+
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "Progress",
+            description = "Track how much you have learned across all content types.\n\n" +
+                "• Progress bars show how many items you have marked as known vs the total available.\n" +
+                "• Mark items as known from any detail screen (kanji, verb, grammar, etc.) using the star icon.\n" +
+                "• SRS Due — items scheduled for spaced-repetition review. Tap 'Start Review' to study them.\n\n" +
+                "Spaced repetition (SRS) schedules items so you review them just before you forget, making study more efficient.",
+            onDismiss = { showHelp = false },
+        )
+    }
 
     // Known counts — reactive
     val knownKanji  by container.knownRepository.getKnownCount("kanji").collectAsStateWithLifecycle(0)
@@ -53,7 +74,21 @@ fun ProgressScreen(onBack: () -> Unit, onStartReview: () -> Unit = {}) {
     val totalPhrase  by produceState(0) { value = container.phraseRepository.getAllPhrases().size }
 
     Scaffold(
-        topBar = { KotobaTopBar(title = "Progress", onBack = onBack) },
+        topBar = {
+            KotobaTopBar(
+                title = "Progress",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         Column(
             modifier = Modifier

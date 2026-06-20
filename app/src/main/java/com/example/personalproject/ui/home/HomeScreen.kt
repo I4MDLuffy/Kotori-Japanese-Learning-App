@@ -58,7 +58,7 @@ fun HomeScreen(
     onIntermediate: () -> Unit,
     onAdvanced: () -> Unit,
     onMaster: () -> Unit,
-    onPurelyGrammar: () -> Unit,
+    onReading: () -> Unit,
     onQuickConversational: () -> Unit,
     onCounters: () -> Unit,
     onTermStudy: () -> Unit,
@@ -241,10 +241,10 @@ fun HomeScreen(
                     SectionLabel("Explore")
                     HomeNavCard(
                         modifier = Modifier.weight(1f),
-                        icon = "📝",
-                        title = "Grammar",
-                        subtitle = "Rules & patterns",
-                        onClick = onPurelyGrammar,
+                        icon = "📰",
+                        title = "Reading",
+                        subtitle = "Comprehension passages",
+                        onClick = onReading,
                     )
                     HomeNavCard(
                         modifier = Modifier.weight(1f),

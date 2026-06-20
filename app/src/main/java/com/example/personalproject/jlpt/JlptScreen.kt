@@ -11,14 +11,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.outlined.HelpOutline
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,7 +49,7 @@ private data class JlptLevelInfo(
 )
 
 @Composable
-fun JlptScreen(onLevelClick: (String) -> Unit) {
+fun JlptScreen(onLevelClick: (String) -> Unit, onDiagnosticTest: () -> Unit = {}) {
     val container = LocalAppContainer.current
     var showHelp by remember { mutableStateOf(false) }
 
@@ -66,7 +70,8 @@ fun JlptScreen(onLevelClick: (String) -> Unit) {
                 "• N2 — Upper-Intermediate: news language, abstract topics\n" +
                 "• N1 — Advanced: near-native comprehension\n\n" +
                 "Each level shows vocabulary, kanji, and grammar filtered to that level. " +
-                "Use Practice Test to simulate a timed JLPT quiz from the app's content.",
+                "Use Practice Test to simulate a timed JLPT quiz from the app's content.\n\n" +
+                "Diagnostic Test — unsure of your level? Take a 20-question test spanning N5–N1 to get a personalised level recommendation.",
             onDismiss = { showHelp = false },
         )
     }
@@ -139,6 +144,38 @@ fun JlptScreen(onLevelClick: (String) -> Unit) {
                     onClick = { onLevelClick(info.level) },
                 )
             }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 4.dp),
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f),
+            )
+
+            // Diagnostic test card
+            OutlinedButton(
+                onClick = onDiagnosticTest,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Icon(
+                    Icons.Filled.School,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp),
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Column(horizontalAlignment = androidx.compose.ui.Alignment.Start) {
+                    Text(
+                        text = "Diagnostic Test",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = "20 questions · find your level",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
         }
     }

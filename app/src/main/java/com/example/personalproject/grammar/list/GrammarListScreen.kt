@@ -46,6 +46,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.compose.material.icons.outlined.HelpOutline
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import app.kotori.japanese.LocalAppContainer
 import app.kotori.japanese.data.model.GrammarEntry
 import kotlinx.coroutines.launch
@@ -53,6 +57,7 @@ import app.kotori.japanese.grammar.list.mvi.GrammarListAction
 import app.kotori.japanese.grammar.list.mvi.GrammarListViewModel
 import app.kotori.japanese.ui.components.JlptBadge
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -62,9 +67,37 @@ fun GrammarListScreen(onGrammarClick: (id: String, allIds: String) -> Unit, onBa
         factory = viewModelFactory { initializer { GrammarListViewModel(container.grammarRepository) } }
     )
     val state by vm.uiState.collectAsStateWithLifecycle()
+    var showHelp by remember { mutableStateOf(false) }
+
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "Grammar",
+            description = "Browse all grammar patterns in the app.\n\n" +
+                "• Search by title, content description, or category.\n" +
+                "• Filter by JLPT level using the chips below the search bar.\n" +
+                "• Tap a pattern to see its full explanation with usage notes and example sentences.\n" +
+                "• Tap the bookmark icon to save a grammar point to your Saved list.\n" +
+                "• Tap the star icon to mark it as known for progress tracking.",
+            onDismiss = { showHelp = false },
+        )
+    }
 
     Scaffold(
-        topBar = { KotobaTopBar(title = "Grammar", onBack = onBack) },
+        topBar = {
+            KotobaTopBar(
+                title = "Grammar",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         Column(
             modifier = Modifier

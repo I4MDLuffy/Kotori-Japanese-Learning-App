@@ -44,6 +44,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.compose.material.icons.outlined.HelpOutline
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import app.kotori.japanese.LocalAppContainer
 import app.kotori.japanese.data.model.KanjiEntry
 import kotlinx.coroutines.launch
@@ -51,6 +55,7 @@ import app.kotori.japanese.kanji.list.mvi.KanjiListAction
 import app.kotori.japanese.kanji.list.mvi.KanjiListViewModel
 import app.kotori.japanese.ui.components.JlptBadge
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 import app.kotori.japanese.util.kanaToRomaji
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -61,9 +66,37 @@ fun KanjiListScreen(onKanjiClick: (id: String, allIds: String) -> Unit, onBack: 
         factory = viewModelFactory { initializer { KanjiListViewModel(container.kanjiRepository) } }
     )
     val state by vm.uiState.collectAsStateWithLifecycle()
+    var showHelp by remember { mutableStateOf(false) }
+
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "Kanji",
+            description = "Browse all kanji in the app.\n\n" +
+                "• Search by kanji character, English meaning, or reading (hiragana/romaji).\n" +
+                "• Filter by JLPT level using the chips below the search bar.\n" +
+                "• Tap a kanji to see its full detail: stroke count, radicals, on/kun readings, and example words.\n" +
+                "• Tap the bookmark icon to save a kanji to your Saved list.\n" +
+                "• Tap the star icon to mark a kanji as known for progress tracking.",
+            onDismiss = { showHelp = false },
+        )
+    }
 
     Scaffold(
-        topBar = { KotobaTopBar(title = "Kanji", onBack = onBack) },
+        topBar = {
+            KotobaTopBar(
+                title = "Kanji",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         Column(
             modifier = Modifier

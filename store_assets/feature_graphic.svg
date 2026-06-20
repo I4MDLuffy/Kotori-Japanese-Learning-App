@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 500" width="1024" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A2744"/>
+      <stop offset="100%" stop-color="#2D5A8E"/>
+    </linearGradient>
+    <radialGradient id="glowLeft" cx="25%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#2A4A7A" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#1A2744" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowRight" cx="78%" cy="55%" r="38%">
+      <stop offset="0%" stop-color="#3D70B8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1A2744" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="500" fill="url(#bg)"/>
+  <rect width="1024" height="500" fill="url(#glowLeft)"/>
+  <rect width="1024" height="500" fill="url(#glowRight)"/>
+
+  <!-- Subtle vertical divider -->
+  <line x1="560" y1="40" x2="560" y2="460" stroke="white" stroke-width="0.75" stroke-opacity="0.12"/>
+
+  <!-- ── Left side: Text ─────────────────────────────────────────── -->
+
+  <!-- App name -->
+  <text x="62" y="210"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="108" font-weight="bold"
+        fill="white" letter-spacing="-1">Kotori</text>
+
+  <!-- Japanese subtitle -->
+  <text x="70" y="258"
+        font-family="'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif"
+        font-size="27" fill="#A8C8F0" letter-spacing="4">日本語学習アプリ</text>
+
+  <!-- Decorative line -->
+  <line x1="70" y1="278" x2="492" y2="278" stroke="#A8C8F0" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- Tagline -->
+  <text x="70" y="320"
+        font-family="Georgia, serif"
+        font-size="22" fill="#C8DEF5" opacity="0.85" letter-spacing="0.5">Your Japanese learning companion.</text>
+
+  <!-- Feature tags -->
+  <text x="70" y="372"
+        font-family="Georgia, serif"
+        font-size="18" fill="#8AAED4" letter-spacing="1">Vocabulary · Kanji · Grammar · Games</text>
+
+  <!-- Cherry blossom (far left, decorative) -->
+  <g transform="translate(34, 82) scale(0.8)" opacity="0.65">
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(72)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(144)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(216)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(288)"/>
+    <circle cx="0" cy="0" r="5" fill="#FFF0F3"/>
+  </g>
+
+  <!-- Scattered petals (left side) -->
+  <ellipse cx="492" cy="380" rx="5"   ry="3"   fill="#FFB7C5" opacity="0.4"  transform="rotate( 20, 492, 380)"/>
+  <ellipse cx="512" cy="128" rx="4"   ry="2.5" fill="#FFB7C5" opacity="0.38" transform="rotate(-30, 512, 128)"/>
+  <ellipse cx="40"  cy="418" rx="4"   ry="2.5" fill="#FFB7C5" opacity="0.32" transform="rotate( 15, 40,  418)"/>
+
+  <!-- ── Right side: Bird (scaled 1.25× from icon, centered ~790,285) ── -->
+  <!-- transform = translate(459, -78) scale(1.25) maps icon bird coords to right panel -->
+  <g transform="translate(459, -78) scale(1.25)">
+
+    <!-- Branch -->
+    <path d="M 115 358 Q 256 351 395 360" stroke="#7D5A3C" stroke-width="13" fill="none" stroke-linecap="round"/>
+    <path d="M 115 358 Q 256 354 395 360" stroke="#A07850" stroke-width="4"  fill="none" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- Bird tail -->
+    <path d="M 192,314 C 168,308 146,322 138,350 C 153,332 170,320 190,316 Z" fill="white"/>
+
+    <!-- Bird body -->
+    <ellipse cx="265" cy="305" rx="90" ry="56" fill="white"/>
+
+    <!-- Wing shading -->
+    <ellipse cx="262" cy="296" rx="68" ry="34" fill="#D4E2F0" opacity="0.75"/>
+
+    <!-- Neck bridge -->
+    <ellipse cx="293" cy="276" rx="32" ry="24" fill="white"/>
+
+    <!-- Bird head -->
+    <circle cx="310" cy="248" r="46" fill="white"/>
+
+    <!-- Beak -->
+    <polygon points="349,242 375,249 349,256" fill="#D4870E"/>
+
+    <!-- Eye -->
+    <circle cx="330" cy="241" r="8.5" fill="#1A2744"/>
+    <circle cx="332" cy="238.5" r="3" fill="white"/>
+
+    <!-- Legs -->
+    <line x1="240" y1="358" x2="232" y2="374" stroke="#B8780C" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="280" y1="358" x2="276" y2="374" stroke="#B8780C" stroke-width="4.5" stroke-linecap="round"/>
+
+    <!-- Left foot toes -->
+    <line x1="232" y1="374" x2="218" y2="371" stroke="#B8780C" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="232" y1="374" x2="230" y2="385" stroke="#B8780C" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="232" y1="374" x2="243" y2="383" stroke="#B8780C" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Right foot toes -->
+    <line x1="276" y1="374" x2="262" y2="371" stroke="#B8780C" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="276" y1="374" x2="274" y2="385" stroke="#B8780C" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="276" y1="374" x2="287" y2="383" stroke="#B8780C" stroke-width="3.5" stroke-linecap="round"/>
+
+  </g>
+
+  <!-- Cherry blossom — top right (independent position) -->
+  <g transform="translate(938, 78)">
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(72)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(144)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(216)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFB7C5" transform="rotate(288)"/>
+    <circle cx="0" cy="0" r="5" fill="#FFF0F3"/>
+    <circle cx="0" cy="0" r="2.5" fill="#FFD0DB"/>
+  </g>
+
+  <!-- Cherry blossom — upper left of bird -->
+  <g transform="translate(612, 52) scale(0.7)">
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFC4D0"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFC4D0" transform="rotate(72)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFC4D0" transform="rotate(144)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFC4D0" transform="rotate(216)"/>
+    <ellipse cx="0" cy="-14" rx="7" ry="11" fill="#FFC4D0" transform="rotate(288)"/>
+    <circle cx="0" cy="0" r="5" fill="#FFF0F3"/>
+  </g>
+
+  <!-- Scattered petals (right side) -->
+  <ellipse cx="972" cy="165" rx="5"   ry="3"   fill="#FFB7C5" opacity="0.48" transform="rotate(-20, 972, 165)"/>
+  <ellipse cx="907" cy="52"  rx="4"   ry="2.5" fill="#FFB7C5" opacity="0.42" transform="rotate( 25, 907, 52)"/>
+  <ellipse cx="582" cy="422" rx="4"   ry="2.5" fill="#FFC4D0" opacity="0.38" transform="rotate(-15, 582, 422)"/>
+  <ellipse cx="652" cy="33"  rx="3.5" ry="2"   fill="#FFB7C5" opacity="0.38" transform="rotate( 10, 652, 33)"/>
+
+</svg>

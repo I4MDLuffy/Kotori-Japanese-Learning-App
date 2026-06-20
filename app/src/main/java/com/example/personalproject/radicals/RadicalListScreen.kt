@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -23,13 +24,17 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import app.kotori.japanese.LocalAppContainer
 import app.kotori.japanese.data.model.RadicalEntry
 import app.kotori.japanese.ui.components.KotobaTopBar
+import app.kotori.japanese.ui.components.ScreenHelpDialog
 
 @Composable
 fun RadicalListScreen(
@@ -48,12 +54,39 @@ fun RadicalListScreen(
     onStudyAll: () -> Unit,
 ) {
     val container = LocalAppContainer.current
+    var showHelp by remember { mutableStateOf(false) }
     val radicals by produceState<List<RadicalEntry>>(emptyList()) {
         value = container.radicalRepository.getAllRadicals()
     }
 
+    if (showHelp) {
+        ScreenHelpDialog(
+            title = "Radicals",
+            description = "Browse kanji radicals — the building blocks of kanji.\n\n" +
+                "• Radicals are organised by stroke count. Tap any radical to see its name, meaning, and all kanji that contain it.\n" +
+                "• Study All — quiz yourself on all radicals with a matching game.\n" +
+                "• Study Group — focus on radicals of a specific stroke count.\n\n" +
+                "Learning radicals helps you decode unfamiliar kanji by recognising their components.",
+            onDismiss = { showHelp = false },
+        )
+    }
+
     Scaffold(
-        topBar = { KotobaTopBar(title = "Radicals", onBack = onBack) }
+        topBar = {
+            KotobaTopBar(
+                title = "Radicals",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = { showHelp = true }) {
+                        Icon(
+                            Icons.Outlined.HelpOutline,
+                            contentDescription = "Help",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         if (radicals.isEmpty()) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {

@@ -21,7 +21,11 @@
       "Bash(xargs ls:*)",
       "Bash(awk '{print $9, $5}')",
       "Bash(grep -v \"//.*import\")",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(xxd)",
+      "Bash(wc -l \"C:/Users/ARSRa/AndroidStudioProjects/PersonalProject/app/src/commonMain/composeResources/files/\"*.csv)",
+      "Bash(awk *)",
+      "Bash(python fix_grammar_csv.py)"
     ]
   }
 }
