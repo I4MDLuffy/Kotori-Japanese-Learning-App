@@ -54,7 +54,6 @@ Features:
 - Detail screens with full explanations
 - Cross-linked navigation between related concepts (e.g., kanji ↔ radicals)
 - Bookmarking system for saved study items
-
 ---
 
 ### 🧩 Radical Learning System
@@ -81,7 +80,6 @@ Gamified reinforcement system with multiple interactive study games:
 - Kanji Builder (radical composition challenge)
 
 All games support custom study sets and a unified setup flow.
-
 ---
 
 ### 💾 Saved Items System
@@ -106,7 +104,6 @@ Fully reactive app-wide configuration system:
 - 🔊 Audio controls (placeholder for future expansion)
 
 All settings are powered by StateFlow and instantly recompose the UI.
-
 ---
 
 ### 🎨 Dynamic Theming System
@@ -128,7 +125,6 @@ Context-aware onboarding system:
 - Automatic help dialog on first visit
 - Persistent “?” help button for all major screens
 - Lightweight, non-intrusive guidance system
-
 ---
 
 ## 🏗 Architecture Overview
@@ -158,6 +154,14 @@ Key design principles:
 - Material 3
 - Android Architecture Components
 
+---
+## Screenshots
+
+![Home](screenshots/KotoriHome.png)
+![StructuredLearning](screenshots/KotoriStructuredLearning.png)
+![Study System](screenshots/KotoriTerms.png)
+![Games](screenshots/KotoriGames.png)
+![Help](screenshots/KotoriIntro.png)
 ---
 
 ## 🚀 Getting Started
